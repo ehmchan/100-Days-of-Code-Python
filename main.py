@@ -4,8 +4,7 @@ from ball import Ball
 import time
 
 # create the screen
-    # in main show
-        # ping pong table
+    # in main
 
 screen = Screen()
 screen.setup(width=800, height=600)
@@ -34,20 +33,17 @@ while game_on:
 
     # create the ball and make it move
     # separate class for ping pong
-    # ping pong
     ball.move()
 
     # detect collision with wall and bounce
     if ball.ycor() > 280 or ball.ycor() < -280:
-        ball.bounce()
+        ball.bounce_y()
+
+    # detect collision with paddle
+    if ball.distance(r_paddle) < 50 and ball.xcor() > 320 or ball.distance(l_paddle) < 50 and ball.xcor() < -320:
+        ball.bounce_x()
 
 
-
-
-
-
-
-# detect collision with paddle
 # detect when paddle misses
 # keep score
     # separate class for scoreboard

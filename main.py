@@ -12,24 +12,24 @@ screen.title("Pong")
 screen.bgcolor("black")
 screen.tracer(0)
 
-paddle = Paddle()
 # create and move a paddle
     # separate class to create paddles
-        # paddle 1
-        # paddle 2
+# create another paddle
+
+r_paddle = Paddle(350, 0)
+l_paddle = Paddle(-350, 0)
 
 screen.listen()
-screen.onkey(paddle.up, "Up")
-screen.onkey(paddle.down, "Down")
+screen.onkey(r_paddle.up, "Up")
+screen.onkey(r_paddle.down, "Down")
+screen.onkey(l_paddle.up, "w")
+screen.onkey(l_paddle.down, "s")
 
 game_on = True
 while game_on:
     screen.update()
     time.sleep(0.1)
 
-
-
-# create another paddle
 # create the ball and make it move
     # separate class for ping pong
         # ping pong

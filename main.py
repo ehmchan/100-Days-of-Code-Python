@@ -31,15 +31,22 @@ game_on = True
 while game_on:
     time.sleep(0.1)
     screen.update()
+
+    # create the ball and make it move
+    # separate class for ping pong
+    # ping pong
     ball.move()
 
-# create the ball and make it move
-    # separate class for ping pong
-        # ping pong
+    # detect collision with wall and bounce
+    if ball.ycor() > 280 or ball.ycor() < -280:
+        ball.bounce()
 
 
 
-# detect collision with wall and bounce
+
+
+
+
 # detect collision with paddle
 # detect when paddle misses
 # keep score

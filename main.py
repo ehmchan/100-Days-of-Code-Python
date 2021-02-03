@@ -27,8 +27,14 @@ while game_is_on:
 
     #detect if turtle collides with car
     for car in car_manager.all_cars:
-        if player.distance(car) < 25:
+        if player.distance(car) < 30:
             game_is_on = False
+
+    #detect when turtle hits top edge
+    if player.ycor() > player.end_pos:
+        player.reset_player()
+        car_manager.increase_speed()
+
 
 
 screen.exitonclick()

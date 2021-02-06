@@ -18,22 +18,24 @@ state_name.speed("fastest")
 # turtle.onscreenclick(get_mouse_click_coor)
 # turtle.mainloop()
 
-answer_state = screen.textinput(title="Guess the State", prompt="What's another state's name?")
-
-# convert guess to title case
-guess = answer_state.title()
-
-# check if guess is among 50 states
-# write correct guesses onto map
-states = data["state"].to_list()
-if guess in states:
-    state = data[data.state == guess]
-    x_coord = int(state.x)
-    y_coord = int(state.y)
-    state_name.goto(x_coord, y_coord)
-    state_name.write(guess, align="center", font=("Arial", 8, "normal"))
-
 # use loop to allow user to keep guessing
+game_is_playing = True
+while game_is_playing:
+    answer_state = screen.textinput(title="Guess the State", prompt="What's another state's name?")
+
+    # convert guess to title case
+    guess = answer_state.title()
+
+    # check if guess is among 50 states
+    # write correct guesses onto map
+    states = data["state"].to_list()
+    if guess in states:
+        state = data[data.state == guess]
+        x_coord = int(state.x)
+        y_coord = int(state.y)
+        state_name.goto(x_coord, y_coord)
+        state_name.write(guess, align="center", font=("Arial", 8, "normal"))
+
 
 # record correct guesses in list
 

@@ -15,3 +15,17 @@ turtle.shape(image)
 answer_state = screen.textinput(title="Guess the State", prompt="What's another state's name?")
 print(answer_state)
 
+# convert guess to title case
+guess = answer_state.title()
+
+# check if guess is among 50 states
+
+# write correct guesses onto map
+
+# use loop to allow user to keep guessing
+
+# record correct guesses in list
+
+# keep track of score
+
+

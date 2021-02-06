@@ -29,6 +29,15 @@ while len(correct_states) < 50:
     # convert guess to title case
     guess = answer_state.title()
 
+    if guess == "Exit":
+        to_learn = []
+        for state in states:
+            if state not in correct_states:
+                to_learn.append(state)
+        learn_data = pandas.DataFrame(to_learn)
+        learn_data.to_csv("states_to_learn.csv")
+        break
+
     # check if guess is among 50 states
     # write correct guesses onto map
     if guess in states:
@@ -43,6 +52,3 @@ while len(correct_states) < 50:
 
         # keep track of score
         score = len(correct_states)
-
-
-screen.exitonclick()

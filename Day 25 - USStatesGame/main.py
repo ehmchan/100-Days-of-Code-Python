@@ -18,17 +18,19 @@ state_name.speed("fastest")
 # turtle.onscreenclick(get_mouse_click_coor)
 # turtle.mainloop()
 
+states = data["state"].to_list()
+correct_states = []
+score = 0
+
 # use loop to allow user to keep guessing
-game_is_playing = True
-while game_is_playing:
-    answer_state = screen.textinput(title="Guess the State", prompt="What's another state's name?")
+while len(correct_states) < 50:
+    answer_state = screen.textinput(title=f"{score}/50 States Correct", prompt="What's another state's name?")
 
     # convert guess to title case
     guess = answer_state.title()
 
     # check if guess is among 50 states
     # write correct guesses onto map
-    states = data["state"].to_list()
     if guess in states:
         state = data[data.state == guess]
         x_coord = int(state.x)
@@ -36,10 +38,11 @@ while game_is_playing:
         state_name.goto(x_coord, y_coord)
         state_name.write(guess, align="center", font=("Arial", 8, "normal"))
 
+        # record correct guesses in list
+        correct_states.append(guess)
 
-# record correct guesses in list
-
-# keep track of score
+        # keep track of score
+        score = len(correct_states)
 
 
 screen.exitonclick()

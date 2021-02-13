@@ -36,20 +36,37 @@ def save():
     if website == "" or password == "":
         messagebox.showinfo(title="Oops", message="Please don't leave any fields empty!")
     else:
-        # is_ok = messagebox.askokcancel(title=website, message=f"These are the details entered: \nEmail: {email} \nPassword: {password} \nIs it ok to save?")
-        #
-        # if is_ok:
-            # with open("data.txt", mode="a") as file:
-            #     file.write(f"{website} | {email} | {password}\n")
-        with open("data.json", "r") as file:
-            # reading old data
-            data = json.load(file)
+        # # day 29 old implementation
+        # # is_ok = messagebox.askokcancel(title=website, message=f"These are the details entered: \nEmail: {email} \nPassword: {password} \nIs it ok to save?")
+        # #
+        # # if is_ok:
+        #     # with open("data.txt", mode="a") as file:
+        #     #     file.write(f"{website} | {email} | {password}\n")
+
+        # no error handling
+        # with open("data.json", "r") as file:
+        #     # reading old data
+        #     data = json.load(file)
+        #     # updating old data with new data
+        #     data.update(new_data)
+        # with open("data.json", "w") as file:
+        #     # saving updated data
+        #     json.dump(data, file, indent=4)
+
+        try:
+            with open("data.json", "r") as file:
+                # reading old data
+                data = json.load(file)
+        except FileNotFoundError:
+            with open("data.json", "w") as file:
+                json.dump(new_data, file, indent=4)
+        else:
             # updating old data with new data
             data.update(new_data)
-        with open("data.json", "w") as file:
-            # saving updated data
-            json.dump(data, file, indent=4)
-
+            with open("data.json", "w") as file:
+                # saving updated data
+                json.dump(data, file, indent=4)
+        finally:
             website_box.delete(0, 'end')
             pw_box.delete(0, 'end')
             website_box.focus()

@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import messagebox
 from random import choice, randint, shuffle
 import pyperclip
+import json
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
 def generate_password():
     letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
@@ -25,18 +26,33 @@ def save():
     website = website_box.get()
     email = email_box.get()
     password = pw_box.get()
+    new_data = {
+        website: {
+            "email": email,
+            "password": password,
+        }
+    }
 
     if website == "" or password == "":
         messagebox.showinfo(title="Oops", message="Please don't leave any fields empty!")
     else:
-        is_ok = messagebox.askokcancel(title=website, message=f"These are the details entered: \nEmail: {email} \nPassword: {password} \nIs it ok to save?")
+        # is_ok = messagebox.askokcancel(title=website, message=f"These are the details entered: \nEmail: {email} \nPassword: {password} \nIs it ok to save?")
+        #
+        # if is_ok:
+            # with open("data.txt", mode="a") as file:
+            #     file.write(f"{website} | {email} | {password}\n")
+        with open("data.json", "r") as file:
+            # reading old data
+            data = json.load(file)
+            # updating old data with new data
+            data.update(new_data)
+        with open("data.json", "w") as file:
+            # saving updated data
+            json.dump(data, file, indent=4)
 
-        if is_ok:
-            with open("data.txt", mode="a") as file:
-                file.write(f"{website} | {email} | {password}\n")
-                website_box.delete(0, 'end')
-                pw_box.delete(0, 'end')
-                website_box.focus()
+            website_box.delete(0, 'end')
+            pw_box.delete(0, 'end')
+            website_box.focus()
 
 # ---------------------------- UI SETUP ------------------------------- #
 window = Tk()

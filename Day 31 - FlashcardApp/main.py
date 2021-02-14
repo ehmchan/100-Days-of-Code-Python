@@ -4,26 +4,40 @@ import random
 
 BACKGROUND_COLOR = "#B1DDC6"
 
-data = pandas.read_csv("./data/french_words.csv")
-words = data.to_dict(orient="records")
-
+words = {}
 new_word = {}
 
 # create new flash cards
 def create_cards():
-    global new_word, flip_timer
-    window.after_cancel(flip_timer)
-    new_word = random.choice(words)
-    canvas.itemconfig(language, text="French", fill="black")
-    canvas.itemconfig(word, text=new_word['French'], fill="black")
-    canvas.itemconfig(canvas_image, image=front_card)
-    flip_timer = window.after(3000, func=flip_card)
+    global words, new_word, flip_timer
+
+    try:
+        data = pandas.read_csv("./data/words_to_learn.csv")
+    except FileNotFoundError:
+        data = pandas.read_csv("./data/french_words.csv")
+
+    finally:
+        words = data.to_dict(orient="records")
+        window.after_cancel(flip_timer)
+        new_word = random.choice(words)
+        canvas.itemconfig(language, text="French", fill="black")
+        canvas.itemconfig(word, text=new_word['French'], fill="black")
+        canvas.itemconfig(canvas_image, image=front_card)
+        flip_timer = window.after(3000, func=flip_card)
 
 # flip cards
 def flip_card():
     canvas.itemconfig(canvas_image, image=back_card)
     canvas.itemconfig(language, text="English", fill="white")
     canvas.itemconfig(word, text=new_word['English'], fill="white")
+
+# save progress
+def know_words():
+    words.remove(new_word)
+    to_learn = words
+    learn_data = pandas.DataFrame(to_learn)
+    learn_data.to_csv("./data/words_to_learn.csv", index=False)
+    create_cards()
 
 # UI Setup
 window = Tk()
@@ -45,7 +59,7 @@ wrong_button = Button(image=wrong_pic, highlightthickness=0, command=create_card
 wrong_button.grid(column=0, row=1)
 
 right_pic = PhotoImage(file="./images/right.png")
-right_button = Button(image=right_pic, highlightthickness=0, command=create_cards)
+right_button = Button(image=right_pic, highlightthickness=0, command=know_words)
 right_button.grid(column=1, row=1)
 
 create_cards()

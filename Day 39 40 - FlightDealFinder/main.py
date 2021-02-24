@@ -28,10 +28,16 @@ orig_prices = flight_data.orig_prices()
 
 # if min price < orig price send alert
 alert_city_num = [num for num in range(len(min_prices)) if min_prices[num] < orig_prices[num]]
+email_data = sheety_data.email_data()["users"]
+emails = [da["email"] for da in email_data]
+
 for num in alert_city_num:
     flight_city = cities[num]
     flight_code = city_codes[num]
     cost = min_prices[num]
     out = out_date[num]
     ret = return_date[num]
-    notif.send_alert(cost, flight_city, flight_code, out, ret)
+    # notif.send_alert(cost, flight_city, flight_code, out, ret)
+    for email in emails:
+        notif.send_email(city=flight_city, code=flight_code, out=out, ret=ret, to_email=email, price=cost)
+

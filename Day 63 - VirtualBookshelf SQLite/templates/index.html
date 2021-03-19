@@ -11,7 +11,11 @@
     {% endif %}
     <ul>
         {% for item in books %}
-        <li> {{ item["title"] }} - {{ item["author"] }} - {{ item["rating"] }}/10</li>
+        <li>
+            <a href="/delete?id={{ item['id'] }}">Delete</a>
+            {{ item["title"] }} - {{ item["author"] }} - {{ item["rating"] }}/10
+            <a href="/edit?id={{ item['id'] }}">Edit Rating</a>
+        </li>
         {% endfor %}
     </ul>
     
